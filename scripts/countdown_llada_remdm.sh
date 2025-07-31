@@ -2,10 +2,9 @@ export HF_ALLOW_CODE_EVAL=1
 export HF_DATASETS_TRUST_REMOTE_CODE=true
 
 
-for see in {0..19}
+for seed in {1..2}
 do
     output_path="./outputs/countdown/llada_remdm/genlen-32_T-32_blocksize-32_seed-${seed}"
-
 
     accelerate launch eval_llada.py \
         --seed $seed \
@@ -15,7 +14,6 @@ do
         --confirm_run_unsafe_code \
         --output_path $output_path \
         --model_args model_path='GSAI-ML/LLaDA-8B-Instruct',mask_length=32,sampling_steps=32,block_size=32,sampler='llada_remdm',remdm_number=1,
-
 
     cp ./*.json ./outputs/countdown/llada_remdm/genlen-32_T-32_blocksize-32_seed-${seed}/
     rm ./*.json
